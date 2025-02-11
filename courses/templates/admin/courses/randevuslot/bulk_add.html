@@ -1,0 +1,195 @@
+{% extends "admin/base_site.html" %} {% load i18n admin_urls static %} 
+{% block extrastyle %} {{ block.super }} 
+<link rel="stylesheet" href="{% static "admin/css/forms.css" %}">
+<style>
+  .select-all-none {
+    margin-bottom: 10px;
+  }
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: #f9fafb;
+  }
+  .time-slot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s;
+  }
+  .time-slot:hover {
+    border-color: #6366f1;
+    background-color: #f5f3ff;
+  }
+  .time-slot input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border-color: #d1d5db;
+    cursor: pointer;
+  }
+  .time-slot label {
+    cursor: pointer;
+    font-size: 14px;
+    color: #374151;
+  }
+  .select-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  .select-button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid #e5e7eb;
+  }
+  .select-all {
+    background-color: #4f46e5;
+    color: white;
+  }
+  .select-all:hover {
+    background-color: #4338ca;
+  }
+  .select-none {
+    background-color: #9ca3af;
+    color: white;
+  }
+  .select-none:hover {
+    background-color: #6b7280;
+  }
+  .form-row {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: white;
+  }
+  .form-row > div {
+    margin-bottom: 10px;
+  }
+  .form-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #374151;
+  }
+  .form-row select,
+  .form-row input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .submit-row {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+  }
+  .submit-row input {
+    background-color: #4f46e5;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .submit-row input:hover {
+    background-color: #4338ca;
+  }
+</style>
+{% endblock %} {% block content %}
+<div id="content-main">
+  <form method="post">
+    {% csrf_token %}
+    <fieldset class="module aligned">
+      <div class="form-row">
+        <div>
+          <label for="course">Kurs:</label>
+          <select name="course" id="course" required>
+            <option value="">---------</option>
+            {% for course in courses %}
+            <option value="{{ course.id }}">{{ course.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label for="tarih">Tarih:</label>
+          <input type="date" name="tarih" id="tarih" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Randevu Saatleri:</label>
+          <div class="select-buttons">
+            <button
+              type="button"
+              onclick="selectAll()"
+              class="select-button select-all"
+            >
+              <i class="fas fa-check-double"></i> Tümünü Seç
+            </button>
+            <button
+              type="button"
+              onclick="selectNone()"
+              class="select-button select-none"
+            >
+              <i class="fas fa-times"></i> Seçimi Temizle
+            </button>
+          </div>
+          <div class="time-slots">
+            {% for saat in saatler %}
+            <div class="time-slot">
+              <input
+                type="checkbox"
+                name="saatler"
+                value="{{ saat.id }}"
+                id="saat_{{ saat.id }}"
+              />
+              <label for="saat_{{ saat.id }}">{{ saat }}</label>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <div class="submit-row">
+      <input type="submit" value="Randevu Slotlarını Oluştur" class="default" />
+    </div>
+  </form>
+</div>
+
+<script>
+  function selectAll() {
+    document.querySelectorAll('input[name="saatler"]').forEach((checkbox) => {
+      checkbox.checked = true;
+    });
+  }
+
+  function selectNone() {
+    document.querySelectorAll('input[name="saatler"]').forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+  }
+
+  // Bugünden önceki tarihleri seçmeyi engelle
+  document.getElementById("tarih").min = new Date().toISOString().split("T")[0];
+</script>
+{% endblock %}

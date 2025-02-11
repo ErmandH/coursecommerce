@@ -1,0 +1,169 @@
+{% load static %}
+
+<!-- Randevu Modal -->
+<div
+  id="randevuModal"
+  class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50"
+>
+  <div
+    class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+  >
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">
+        <i class="fas fa-calendar-alt mr-2"></i>Randevu Al
+      </h3>
+      <form id="randevuForm" class="space-y-4">
+        <input type="hidden" id="courseId" name="course_id" />
+        <input type="hidden" id="selectedSlotId" name="slot_id" />
+        <input type="hidden" id="selectedSaatId" name="saat_id" />
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Ad Soyad</label
+          >
+          <input
+            type="text"
+            id="adSoyad"
+            name="ad_soyad"
+            required
+            placeholder="Adınız ve soyadınız"
+            class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Telefon</label>
+          <input
+            type="tel"
+            id="telefon"
+            name="telefon"
+            required
+            placeholder="05XX XXX XX XX"
+            class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Randevu Tarihi</label
+          >
+          <input
+            type="date"
+            id="randevuTarihi"
+            name="randevu_tarihi"
+            required
+            class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Randevu Saati</label
+          >
+          <select
+            id="randevuSaati"
+            required
+            class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          >
+            <option value="">Önce tarih seçiniz</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Not</label>
+          <textarea
+            name="not_bilgisi"
+            rows="3"
+            class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            placeholder="Eklemek istediğiniz notları buraya yazabilirsiniz..."
+          ></textarea>
+        </div>
+
+        <div class="flex justify-end space-x-3">
+          <button
+            type="button"
+            onclick="closeModal('randevu')"
+            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
+          >
+            İptal
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition flex items-center"
+          >
+            <i class="fas fa-check mr-2"></i>Randevu Al
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Bilgi Modal -->
+<div
+  id="bilgiModal"
+  class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full z-50"
+>
+  <div
+    class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+  >
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">
+        <i class="fas fa-info-circle mr-2"></i>Kurs Hakkında Bilgi Al
+      </h3>
+      <form id="bilgiForm" class="space-y-4">
+        <input type="hidden" id="bilgiCourseId" name="course_id" />
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Ad Soyad</label
+          >
+          <input
+            type="text"
+            name="ad_soyad"
+            required
+            class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            placeholder="Adınız ve soyadınız"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Telefon</label>
+          <input
+            type="tel"
+            name="telefon"
+            required
+            class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            placeholder="05XX XXX XX XX"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Notunuz</label>
+          <textarea
+            name="not_bilgisi"
+            rows="4"
+            class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            placeholder="Kurs hakkında sormak istediklerinizi buraya yazabilirsiniz..."
+          ></textarea>
+        </div>
+
+        <div class="flex justify-end space-x-3">
+          <button
+            type="button"
+            onclick="closeModal('bilgi')"
+            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
+          >
+            İptal
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition flex items-center"
+          >
+            <i class="fas fa-paper-plane mr-2"></i>Gönder
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
