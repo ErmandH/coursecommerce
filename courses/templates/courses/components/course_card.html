@@ -34,9 +34,6 @@
         <i class="fas fa-calendar-alt mr-2"></i>Randevu Al
       </button>
       {% else %}
-      <span class="text-indigo-600 font-semibold">
-        <i class="fas fa-tag mr-1"></i>{{ course.price }} ₺
-      </span>
       <button
         onclick="openModal({{ course.id }}, 'bilgi')"
         class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition flex items-center"
