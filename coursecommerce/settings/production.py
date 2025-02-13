@@ -8,7 +8,10 @@ ALLOWED_HOSTS = ['165.227.133.219', 'kadirdemirmatematik.com', 'www.kadirdemirma
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 # Database
 # eğer db değiştirilirse aşağıdaki kodları kaldırıp yeni db yapısını ekleyin
 
